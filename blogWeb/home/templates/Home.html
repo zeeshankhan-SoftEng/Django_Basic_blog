@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block start %}
+<div>
+    <h1>this is blog post</h1>
+    <a href="create"><button class="btn btn-primary">Create Blog</button></a>
+</div>
+<form method="get" action="{% url 'home' %}">
+    <input type="text" name="q" placeholder="Search...">
+
+        <button type="submit" class="btn btn-success">Search</button>
+</form>
+
+<section class="d-flex flex-row  mb-3 container" style="width: 100%">
+    <div class="row justify-content-start">
+        {% for people in peoples %}
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card" style="background-color: #E0E0E0;">
+                <div class="card-body" style="margin: 10px; padding: 20px;">
+                    <h3 class="card-title">{{ people.title }}</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ people.date }}</h6>
+                    <a href="{% url 'details_blog' id=people.id %}"><button class="btn btn-info">Details</button></a>
+                    <a href="{% url 'update_blog' id=people.id %}"><button class="btn btn-warning">Update</button></a>
+                    <div class="" style="margin-top:5px"><form method="post" action="{% url 'delete_blog' id=people.id %}">
+                     {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+{% endblock %}
